@@ -1,7 +1,7 @@
 short
 =====
 
-short is a utility to shorten urls using google url shortener
+short is a utility to shorten URLs using Google URL shortener
 
 #### INSTALL
 `go get github.com/nexneo/short`
@@ -11,7 +11,6 @@ short is a utility to shorten urls using google url shortener
 
 #### Usage
 
-`short http://github.com` will print short url
+`short http://github.com` will print short URL, and copy short URL to clipboard (Mac OS X only)
 
-`short -c http://github.com` will copy short url to clipboard (Mac OS X only)
-
+`short -p http://github.com` will only print short URL to stdout (pipe friendly)

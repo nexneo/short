@@ -46,7 +46,7 @@ func main() {
 	ret := res.ShortUrl
 	fmt.Println(ret)
 
-	if *doCopy {
+	if !*pipeReady {
 		cmd := exec.Command("pbcopy")
 		in, err := cmd.StdinPipe()
 		die(err)
@@ -62,17 +62,17 @@ func main() {
 	}
 }
 
-var doCopy = flag.Bool("c", false, "Copy to clipboard")
+var pipeReady = flag.Bool("p", false, "easy output for pipe (prevents clipboard copy)")
 var longUrl string
 
 func init() {
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: %s\n\n", "short [-c] URL")
+		fmt.Fprintf(os.Stderr, "Usage: %s\n\n", "short [-p] URL")
 		flag.PrintDefaults()
 	}
 	flag.Parse()
 
-	if *doCopy && len(os.Args) == 3 {
+	if *pipeReady && len(os.Args) == 3 {
 		longUrl = os.Args[2]
 	} else if len(os.Args) == 2 {
 		longUrl = os.Args[1]
