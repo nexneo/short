@@ -37,7 +37,7 @@ type response struct {
 
 func main() {
 	req := easyreq.NewJson(&request{longUrl})
-	data, err := req.Do("POST", "https://www.googleapis.com/urlshortener/v1/url")
+	data, err := req.Do("POST", "https://www.googleapis.com/urlshortener/v1/url?key={YOUR_API_KEY}")
 	die(err)
 	res := &response{}
 	die(json.NewDecoder(data.Body).Decode(res))
