@@ -20,7 +20,9 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 
@@ -39,9 +41,15 @@ func main() {
 	req := easyreq.NewJson(&request{longUrl})
 	data, err := req.Do("POST", "https://www.googleapis.com/urlshortener/v1/url?key={YOUR_API_KEY}")
 	die(err)
+	// check if we got 200
+	if data.StatusCode != http.StatusOK {
+		io.Copy(os.Stderr, data.Body)
+		os.Exit(1)
+	}
+	// parse now
 	res := &response{}
 	die(json.NewDecoder(data.Body).Decode(res))
-	data.Body.Close()
+	defer data.Body.Close()
 
 	ret := res.ShortUrl
 	fmt.Println(ret)
